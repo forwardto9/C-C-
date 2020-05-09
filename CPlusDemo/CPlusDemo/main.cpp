@@ -10,6 +10,48 @@
 #include <set>
 #include <vector>
 #include "Header.h"
+#include <iomanip>
+#include <string>
+
+#pragma mark - class template
+
+template <class T>
+class Set
+{
+    T t;
+public:
+    Set(T st) : t(st) {}
+
+    void display() {
+        std::cout << t << std::endl;
+    }
+};
+
+// Normal class, Not-template class
+class Set_int
+{
+    int t;
+public:
+    Set_int(int st): t(st) {}
+
+    void display() {
+        std::cout << std::setw(10) << std::setfill('0')
+            << t << std::endl;
+    }
+};
+
+// Specialized class template
+template <> class Set<int>
+{
+    int t;
+public:
+    Set(int st): t(st) {}
+
+    void display() {
+        std::cout << std::setw(10) << std::setfill('o')
+            << t << std::endl;
+    }
+};
 
 class VirtualClass {
 public:
@@ -255,6 +297,13 @@ int main(int argc, const char * argv[]) {
     vc->f1();
     
     
+    Set<std::string> at("hello");
+    Set_int bnt(2);  // User needs to know there is a non-template class.
+    Set<int> cst(2); // User doesn't need to know there is a non-template class.
+
+    at.display();
+    bnt.display();
+    cst.display();
     
     return 0;
 }
